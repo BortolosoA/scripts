@@ -64,6 +64,7 @@ case "$LANG" in
         echo "1) Next"
         echo "2) vue"
         echo "3) Vue"
+        echo "4) Blank"
         read -p "Opção: " FWK
         
         case "$FWK" in
@@ -127,6 +128,38 @@ case "$LANG" in
                     code-attach Vite /app
                 fi
                 ;;
+            4)
+                clear
+                echo -e "${VERDE}${BANNER}${RESET}"
+                echo "Configurando ambiente para JavaScript / TypeScript..."
+                mkdir -p $HOME/learning/js-ts/aplications
+                read -p "nome" NAME
+                read -p "porta" PORT
+                if [[ -z "$(docker container ls | grep "$NAME")" && -z "$(ls -A $HOME/learning/js-ts/$NAME)" ]];then
+                    docker run -it -d --rm --name $NAME -w /app -p $PORT:$PORT -v $HOME/learning/js-ts/$NAME:/app node:24-alpine
+                    docker exec -it Vue sh -c "corepack enable pnpm && pnpm create vue"
+                    sleep 1
+                    echo "Abrindo IDE"
+                    sleep 1
+                    code-attach Vue /app
+
+                elif [[ -z "$(docker container ls | grep "Vue")" && -n "$(ls -A $HOME/learning/js-ts/vue)" ]];then
+                    echo "Subindo Container"
+                    docker run -it -d --rm --name Vue -w /app -p 5173:5173 -v $HOME/learning/js-ts/vue:/app node:24-alpine
+                    echo "Volume de container já existente"
+                    sleep 1
+                    echo "Abrindo IDE"
+                    sleep 1
+                    code-attach Vue /app
+
+                else
+                    echo "Container e volume ja em operação"
+                    sleep 1
+                    echo "Abrindo IDE"
+                    sleep 1
+                    code-attach Vue /app
+                fi
+                ;;
             3)
                 clear
                 echo -e "${VERDE}${BANNER}${RESET}"
@@ -134,7 +167,7 @@ case "$LANG" in
                 mkdir -p $HOME/learning/js-ts/vue
                 if [[ -z "$(docker container ls | grep "Vue")" && -z "$(ls -A $HOME/learning/js-ts/vue)" ]];then
                     docker run -it -d --rm --name Vue -w /app -p 5173:5173 -v $HOME/learning/js-ts/vue:/app node:24-alpine
-                    docker exec -it Vue sh -c "corepack enable pnpm && pnpm create vue"
+                    docker exec -it Vue sh -c "apt install git curl"
                     sleep 1
                     echo "Abrindo IDE"
                     sleep 1
@@ -185,7 +218,7 @@ case "$LANG" in
             echo "Volume existente, iniciando container."
             sleep 2
             code-attach rust-learn /app
-            
+
         else
             echo "Container e Volume existente"
             sleep 1

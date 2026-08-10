@@ -26,7 +26,7 @@ $apps = @(
     "Discord.Discord",
     "Telegram.TelegramDesktop",
     "Valve.Steam",
-    "CommandLine.Waveterm",     # Wave Terminal (verifique com 'winget search waveterm' se o id mudar
+    "CommandLine.Waveterm",
     "Mozilla.Thunderbird",
     "Microsoft.VisualStudioCode",
     "Notepad++.Notepad++",

@@ -1,9 +1,4 @@
 #Requires -RunAsAdministrator
-<#
-    Script de instalacao automatizada
-    Execute como Administrador (botao direito -> Executar com PowerShell)
-#>
-
 Write-Host "=== Liberando execucao de scripts ===" -ForegroundColor Cyan
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
